@@ -18,7 +18,7 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 'latest'
+        ruby-version: '3.1'  # Specify a specific Ruby version
 
     - name: Install Bundler
       run: |
@@ -50,7 +50,7 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 'latest'
+        ruby-version: '3.1'  # Specify a specific Ruby version
 
     - name: Install Bundler
       run: |
