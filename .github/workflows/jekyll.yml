@@ -1,4 +1,4 @@
-name: GitHub Pages
+name: Build and Deploy Jekyll Site
 
 on:
   push:
@@ -7,42 +7,64 @@ on:
       - testing
 
 jobs:
-  deploy:
+  build-master:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: 'master'
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2.0'
+    - name: Setup Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '2.7'
 
-      - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install
+    - name: Install Jekyll and Bundler
+      run: |
+        gem install jekyll bundler
 
-      - name: Build master
-        run: |
-          JEKYLL_ENV=production bundle exec jekyll build --destination ./public/master
+    - name: Build Jekyll site
+      run: |
+        bundle install
+        JEKYLL_ENV=production bundle exec jekyll build
 
-      - name: Build testing
-        run: |
-          JEKYLL_ENV=production bundle exec jekyll build --config _config.yml,_config.testing.yml --destination ./public/testing
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./_site
+        destination_dir: master
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          publish_branch: master
-          cname: yourdomain.com
-          keep_history: true
-          deploy_to: |
-            master: /
-            testing: /testing
+  build-testing:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/testing'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: 'testing'
+
+    - name: Setup Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: '2.7'
+
+    - name: Install Jekyll and Bundler
+      run: |
+        gem install jekyll bundler
+
+    - name: Build Jekyll site
+      run: |
+        bundle install
+        JEKYLL_ENV=production bundle exec jekyll build
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./_site
+        destination_dir: testing
