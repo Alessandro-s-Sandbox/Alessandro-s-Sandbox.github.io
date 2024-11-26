@@ -15,18 +15,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Setup Ruby
+    - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 'latest'
 
-    - name: Install Jekyll and Bundler
+    - name: Install Bundler
       run: |
-        gem install jekyll bundler
+        gem install bundler
 
-    - name: Build Jekyll site
+    - name: Install Dependencies
       run: |
         bundle install
+
+    - name: Build Jekyll Site
+      run: |
         JEKYLL_ENV=production bundle exec jekyll build
 
     - name: Deploy to GitHub Pages
@@ -44,18 +47,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Setup Ruby
+    - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 'latest'
 
-    - name: Install Jekyll and Bundler
+    - name: Install Bundler
       run: |
-        gem install jekyll bundler
+        gem install bundler
 
-    - name: Build Jekyll site
+    - name: Install Dependencies
       run: |
         bundle install
+
+    - name: Build Jekyll Site
+      run: |
         JEKYLL_ENV=production bundle exec jekyll build
 
     - name: Deploy to GitHub Pages
