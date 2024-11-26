@@ -28,6 +28,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - run: git checkout master
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
@@ -35,25 +36,17 @@ jobs:
         with:
           source: ./
           destination: ./_site
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-  build_testing:
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: 'testing'
+      - run: git checkout testing
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site/testing/
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-    
+        uses: actions/upload-pages-artifact@v3    
 
   # Deployment job
   deploy:
