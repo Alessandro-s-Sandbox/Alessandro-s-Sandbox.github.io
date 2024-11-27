@@ -1,0 +1,26 @@
+name: Build and Publish Jekyll Site
+
+on:
+  push:
+    branches:
+      - testing # Change this to your master branch's name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+     
+      - name: Deploy Site
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          external_repository: Alessandro-s-Sandbox/testing-deploy
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
+          publish_branch: main # Change this to your master branch's name
+          publish_dir: ./_site # change to the output dir of your Jekyll build
+          destination_dir: /testing
