@@ -23,4 +23,4 @@ jobs:
           deploy_key: ${{ secrets.DEPLOY_KEY }}
           publish_branch: main # Change this to your master branch's name
           publish_dir: ./_site # change to the output dir of your Jekyll build
-          destination_dir: /testing
+          destination_dir: testing
