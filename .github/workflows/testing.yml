@@ -1,4 +1,4 @@
-name: Build and Publish Jekyll Site
+name: Build and Publish testing branch to deploy repository
 
 on:
   push:
