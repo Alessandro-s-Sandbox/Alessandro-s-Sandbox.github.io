@@ -39,7 +39,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: masterBuild
-          path: .
         
   build_testing:    
     needs:
@@ -53,7 +52,6 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: masterBuild
-          path: .
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
@@ -65,7 +63,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
-          path: .
 
   # Deployment job
   deploy:
