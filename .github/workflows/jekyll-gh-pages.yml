@@ -60,9 +60,12 @@ jobs:
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
-          destination: ./testing/_site
+          destination: ./_site/testing
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          name: github-pages
+          path: .
 
   # Deployment job
   deploy:
