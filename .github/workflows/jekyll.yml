@@ -15,22 +15,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '3.1'  # Specify a specific Ruby version
-
-    - name: Install Bundler
+    - name: Build with Jekyll Docker image
       run: |
-        gem install bundler
-
-    - name: Install Dependencies
-      run: |
-        bundle install
-
-    - name: Build Jekyll Site
-      run: |
-        JEKYLL_ENV=production bundle exec jekyll build
+        docker run --rm \
+        -v ${{ github.workspace }}:/srv/jekyll \
+        -v ${{ github.workspace }}/vendor/bundle:/usr/local/bundle \
+        jekyll/builder:latest \
+        jekyll build
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
@@ -47,22 +38,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '3.1'  # Specify a specific Ruby version
-
-    - name: Install Bundler
+    - name: Build with Jekyll Docker image
       run: |
-        gem install bundler
-
-    - name: Install Dependencies
-      run: |
-        bundle install
-
-    - name: Build Jekyll Site
-      run: |
-        JEKYLL_ENV=production bundle exec jekyll build
+        docker run --rm \
+        -v ${{ github.workspace }}:/srv/jekyll \
+        -v ${{ github.workspace }}/vendor/bundle:/usr/local/bundle \
+        jekyll/builder:latest \
+        jekyll build
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
