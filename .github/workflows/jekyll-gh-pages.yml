@@ -35,10 +35,10 @@ jobs:
         with:
           source: ./
           destination: ./_site
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/cache@v4
         with:
-          name: masterBuild
+          path: _site
+          key: site
         
   build_testing:    
     needs:
@@ -49,9 +49,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: 'testing'
-      - uses: actions/download-artifact@master
+      - uses: actions/cache/restore@v4
         with:
-          name: masterBuild
+          path: _site
+          key: site
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
